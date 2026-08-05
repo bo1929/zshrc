@@ -21,3 +21,7 @@ alias ssh='TERM=xterm-256color ssh'
 
 # Third-party applications.
 # alias ls='eza -snew'
+
+mvdir() {
+  mkdir -p "${@: -1}" && mv "$@"
+}
