@@ -11,8 +11,6 @@ source ${PATH_ANTIGEN}
 antigen bundle zsh-users/zsh-autosuggestions
 # Extended completions.
 antigen bundle zsh-users/zsh-completions
-# Syntax highlighting.
-antigen bundle zsh-users/zsh-syntax-highlighting
 # ==  ==
 
 # I'm done...
