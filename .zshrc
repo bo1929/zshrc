@@ -1,4 +1,3 @@
-system_type=$(uname -s)
 # Source misc.
 ZSH_MISC_PATH="${HOME}/.config/zsh/misc.sh" 
 if [[ -e ${ZSH_MISC_PATH} ]]; then
@@ -6,11 +5,13 @@ if [[ -e ${ZSH_MISC_PATH} ]]; then
 fi
 
 # Source dir_colors.
-ZSH_DIRCOLORS_PATH="${HOME}/.config/zsh/.dircolors" 
-if [ "${system_type}" = "Darwin" ]; then
-  test -r ${ZSH_DIRCOLORS_PATH} && eval $(gdircolors ${ZSH_DIRCOLORS_PATH})
-else
-  test -r ${ZSH_DIRCOLORS_PATH} && eval $(dircolors -b ${ZSH_DIRCOLORS_PATH})
+ZSH_DIRCOLORS_PATH="${HOME}/.config/zsh/.dircolors"
+if [[ -r "${ZSH_DIRCOLORS_PATH}" ]]; then
+  if (( $+commands[gdircolors] )); then
+    eval "$(gdircolors -b "${ZSH_DIRCOLORS_PATH}")"
+  elif (( $+commands[dircolors] )); then
+    eval "$(dircolors -b "${ZSH_DIRCOLORS_PATH}")"
+  fi
 fi
 
 # Source aliases:
@@ -19,16 +20,22 @@ if [[ -e ${ZSH_ALIASES_PATH} ]]; then
   source ${ZSH_ALIASES_PATH}
 fi
 
+# Source main configuration.
+ZSH_MAIN_PATH="${HOME}/.config/zsh/main.zsh" 
+if [[ -e ${ZSH_MAIN_PATH} ]]; then
+  source ${ZSH_MAIN_PATH}
+fi
+
 # Source plugins.
 ZSH_PLUGINS_PATH="${HOME}/.config/zsh/plugins.zsh" 
 if [[ -e ${ZSH_PLUGINS_PATH} ]]; then
   source ${ZSH_PLUGINS_PATH}
 fi
 
-# Source main configuration.
-ZSH_MAIN_PATH="${HOME}/.config/zsh/main.zsh" 
-if [[ -e ${ZSH_MAIN_PATH} ]]; then
-  source ${ZSH_MAIN_PATH}
+# Completion; one compinit only.
+ZSH_COMPLETION_PATH="${HOME}/.config/zsh/completion.zsh"
+if [[ -e ${ZSH_COMPLETION_PATH} ]]; then
+  source ${ZSH_COMPLETION_PATH}
 fi
 
 # Zsh-Syntax-Highlighting, this must be sourced last.

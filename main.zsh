@@ -11,11 +11,14 @@ zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character 
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
 zstyle ':completion:*' squeeze-slashes true # "path//<Tab>" is "path/" rather than "path/*"
 zstyle :compinstall filename ${HOME}'/.zshrc'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+if [[ -n "${LS_COLORS}" ]]; then
+  () {
+    setopt localoptions noglob
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+  }
+fi
 
 zmodload zsh/complist
-autoload -Uz compinit
-compinit
 # End of lines added by compinstall.
 
 # Lines configured by zsh-newuser-install.
@@ -25,6 +28,10 @@ SAVEHIST=1000
 setopt autocd
 bindkey -v
 # End of lines configured by zsh-newuser-install.
+
+# Tab completion in vi insert and command mode.
+bindkey -M viins '^I' expand-or-complete
+bindkey -M vicmd '^I' expand-or-complete
 
 # Beginning of vi mode.
 # Use vim keys in tab complete menu.
@@ -50,11 +57,10 @@ zle-line-init() {
 zle -N zle-line-init
 # Use beam shape cursor on startup.
 echo -ne '\e[5 q'
-# Use beam shape cursor for each new prompt.
-preexec() { echo -ne '\e[5 q' ;}
+
+_zsh_cursor_beam() { echo -ne '\e[5 q' ;}
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _zsh_cursor_beam
 # End of vi mode.
 
 bindkey '^R' history-incremental-search-backward
-
-# Add functions
-fpath=( "${HOME}/.config/zsh/functions" "${fpath[@]}" )
