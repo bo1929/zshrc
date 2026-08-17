@@ -38,13 +38,18 @@ if [[ -e ${ZSH_COMPLETION_PATH} ]]; then
   source ${ZSH_COMPLETION_PATH}
 fi
 
-# Zsh-Syntax-Highlighting, this must be sourced last.
+# Source local config.
+ZSH_CFG_PATH="${HOME}/.zshrc" 
+if [[ -e ${ZSH_CFG_PATH} ]]; then
+  source ${ZSH_CFG_PATH}
+fi
+
+# Zsh-Syntax-Highlighting, clone if missing; this must be sourced last.
 ZSH_SYNTAX_HIGHLIGHTING_DIR="${HOME}/.config/zsh/zsh-syntax-highlighting"
 if [ ! -d ${ZSH_SYNTAX_HIGHLIGHTING_DIR} ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
   ${ZSH_SYNTAX_HIGHLIGHTING_DIR}
 fi
-
 ZSH_SYNTAX_HIGHLIGHTING_PATH="${ZSH_SYNTAX_HIGHLIGHTING_DIR}/zsh-syntax-highlighting.zsh"
 if [[ -e ${ZSH_SYNTAX_HIGHLIGHTING_PATH} ]]; then
   source ${ZSH_SYNTAX_HIGHLIGHTING_PATH}

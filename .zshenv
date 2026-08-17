@@ -21,4 +21,3 @@ esac
 export COLORTERM="${COLORTERM:-truecolor}"
 
 export ZDOTDIR="$HOME/.config/zsh"
-
