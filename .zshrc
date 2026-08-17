@@ -1,5 +1,5 @@
 # Source misc.
-ZSH_MISC_PATH="${HOME}/.config/zsh/misc.sh" 
+ZSH_MISC_PATH="${HOME}/.config/zsh/misc.zsh"
 if [[ -e ${ZSH_MISC_PATH} ]]; then
   source ${ZSH_MISC_PATH}
 fi
